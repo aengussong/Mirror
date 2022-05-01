@@ -14,5 +14,11 @@
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+
+        <item name="android:windowBackground">?attr/colorOnSecondary</item>
+
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">?attr/colorOnSecondary</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/load_animation</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">10000</item>
     </style>
 </resources>

@@ -1,19 +1,15 @@
 package com.aengussong.mirror.repository
 
-import com.aengussong.mirror.proto.MirrorAddress
 import com.aengussong.mirror.repository.remote.ApiService
-import com.aengussong.mirror.repository.remote.response.PingResponse
+import com.aengussong.mirror.proto.MirrorAddress
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val apiService: ApiService) : Repository {
 
-    override suspend fun ping(host: String, port: String): PingResponse {
+    override suspend fun ping(host: String, port: String): Boolean {
         val url = "$host:$port/api/test"
         return apiService.ping(url)
-    }
-
-    override suspend fun pingSaved(): PingResponse {
-        return PingResponse(false)
     }
 
     override suspend fun getSavedAddress(): MirrorAddress? {
@@ -25,6 +21,7 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService) : R
     }
 
     override suspend fun hasSavedAddress(): Boolean {
+        delay(3000)
         return false
     }
 }

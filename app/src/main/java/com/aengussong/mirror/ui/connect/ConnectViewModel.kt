@@ -17,7 +17,7 @@ class ConnectViewModel @Inject constructor(private val repo: Repository) : BaseV
 
         networkLaunch {
             val response = repo.ping(ip, port)
-            if (response.success == true) {
+            if (response) {
                 performAction(ShowActions)
             } else {
                 showMessage(CantConnect)
