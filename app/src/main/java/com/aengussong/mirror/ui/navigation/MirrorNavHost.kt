@@ -26,10 +26,7 @@ fun MirrorNavHost(navController: NavHostController) {
                     easing = CubicBezierEasing(0.08f, 0.93f, 0.68f, 1.27f)
                 )
                 slideOutVertically(targetOffsetY = { -it }, animationSpec = tweenSpec)
-            },
-            enterTransition = { null },
-            popEnterTransition = { null },
-            popExitTransition = { null }) { Splash() }
+            }) { Splash() }
         composable(Navigation.NoSavedAddress.asDestination()) { EnterAddress() }
     }
 }
