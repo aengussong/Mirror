@@ -18,38 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 open class BaseViewModel @Inject constructor(): ViewModel() {
 
-    protected val progressFlow = MutableStateFlow(false)
-
-    protected val messageFlow = MutableSharedFlow<Message>()
-
-    protected val actionFlow = MutableSharedFlow<Action>()
-
-    protected val errorHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-        progressFlow.value = false
-    }
-
-    protected val networkScope = CoroutineScope(Dispatchers.IO + errorHandler)
-
-    protected fun networkLaunch(request: suspend () -> Unit) {
-        networkScope.launch {
-            progressFlow.emit(true)
-            request()
-            progressFlow.emit(false)
-        }
-    }
-
-    protected fun showMessage(message: Message) {
-        viewModelScope.launch {
-            messageFlow.emit(message)
-        }
-    }
-
-    protected fun performAction(action: Action) {
-        viewModelScope.launch {
-            actionFlow.emit(action)
-        }
-    }
-
     protected suspend fun <T> SharedFlow<T>.emit(value: T) {
         if(this is MutableSharedFlow<T>) emit(value)
         else throw IllegalStateException("$this should be MutableSharedFlow")

@@ -1,9 +1,25 @@
 package com.aengussong.mirror.ui.navigation
 
-sealed class Navigation(private val destination: String) {
-    fun asDestination(): String = destination
+import androidx.navigation.NamedNavArgument
 
-    object Splash: Navigation("splash")
+sealed interface Navigation {
+    fun asDestination(): String = this::class.java.simpleName
 
-    object NoSavedAddress: Navigation("enter_address")
+    object Splash : Navigation
+
+    object NoSavedAddress : Navigation
+
+    class Connect(val ip: String, val port: String) : Navigation {
+        override fun asDestination(): String {
+            return super.asDestination() + "/$ip/$port"
+        }
+    }
+    object AutomaticScan : Navigation
 }
+
+// todo passing arguments in the wrong order (right order declared in the route, returned by the
+//  [Navigation.asDestination] function) will result in possible bugs and crashes. Should somehow
+//  restrict API user from passing arguments in wrong order. Also argument names are duplicated
+//  in several places in the NavHost.
+inline fun <reified T : Navigation> asDestination(vararg params: NamedNavArgument): String =
+    T::class.java.simpleName + params.joinToString(separator = "") { "/{${it.name}}" }

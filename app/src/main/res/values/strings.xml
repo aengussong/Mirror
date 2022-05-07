@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Mirror</string>
+
+    <string name="title_cant_access_previous_address">Can’t access the mirror</string>
+    <string name="message_provide_new_address">Please provide mirror ip and port if available. Otherwise just start automatic scan.</string>
+    <string name="hint_mirror_ip">Mirror IP</string>
+    <string name="hint_mirror_port">Mirror Port</string>
+    <string name="scan">Scan</string>
+    <string name="automatic_scan">Automatic scan</string>
 </resources>
