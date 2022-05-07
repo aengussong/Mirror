@@ -11,11 +11,10 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.animation.doOnEnd
-import androidx.navigation.NavController
 import com.aengussong.mirror.ui.navigation.MirrorNavHost
 import com.aengussong.mirror.ui.navigation.Navigation
 import com.aengussong.mirror.ui.theme.MirrorTheme
@@ -36,7 +35,14 @@ class MainActivity : AppCompatActivity() {
                 val navController = rememberAnimatedNavController()
                 MirrorNavHost(navController = navController)
 
-                Main(viewModel = viewModel, navController)
+                val navigation: Navigation? by viewModel.navigation.collectAsState(initial = null)
+                LaunchedEffect(navigation) {
+                    navigation?.let {
+                        // pop Splash from backstack
+                        navController.popBackStack(0, inclusive = true)
+                        navController.navigate(it.asDestination())
+                    }
+                }
             }
         }
 
@@ -81,13 +87,5 @@ class MainActivity : AppCompatActivity() {
                 return viewModel.isSplashReady
             }
         })
-    }
-}
-
-@Composable
-fun Main(viewModel: MainViewModel, navController: NavController) {
-    val navigation: Navigation? by viewModel.navigation.collectAsState(initial = null)
-    navigation?.let {
-        navController.navigate(it.asDestination())
     }
 }

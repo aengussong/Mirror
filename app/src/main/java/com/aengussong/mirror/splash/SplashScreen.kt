@@ -1,4 +1,4 @@
-package com.aengussong.mirror.ui.splash
+package com.aengussong.mirror.splash
 
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
@@ -23,7 +23,7 @@ import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
-fun Splash() {
+fun SplashScreen() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
