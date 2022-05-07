@@ -15,6 +15,8 @@ sealed interface Navigation {
         }
     }
     object AutomaticScan : Navigation
+
+    object ControlMirror: Navigation
 }
 
 // todo passing arguments in the wrong order (right order declared in the route, returned by the

@@ -61,7 +61,8 @@ fun EnterAddressScreen(vm: EnterAddressViewModel = viewModel(), onNavigate: (Nav
                 .padding(40.dp)
                 .align(Alignment.CenterHorizontally),
             fontSize = 18.sp,
-            text = stringResource(id = R.string.message_provide_new_address), color = Color.White
+            text = stringResource(id = R.string.message_provide_new_address),
+            color = Color.White
         )
 
         var ip by rememberSaveable { mutableStateOf("") }

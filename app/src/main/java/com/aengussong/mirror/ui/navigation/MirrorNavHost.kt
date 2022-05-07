@@ -6,7 +6,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.*
-import com.aengussong.ConnectingScreen
+import com.aengussong.mirror.connecting.ConnectingScreen
+import com.aengussong.mirror.control.ControlScreen
 import com.aengussong.mirror.enter_address.EnterAddressScreen
 import com.aengussong.mirror.splash.SplashScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -43,6 +44,14 @@ fun MirrorNavHost(navController: NavHostController) {
         }
         mirrorComposable(route = Navigation.AutomaticScan.asDestination()) {
             ConnectingScreen {
+                navController.navigate(
+                    it.asDestination()
+                )
+            }
+        }
+        mirrorComposable(route = Navigation.ControlMirror.asDestination()) {
+            navController.popBackStack(0, inclusive = true)
+            ControlScreen {
                 navController.navigate(
                     it.asDestination()
                 )
