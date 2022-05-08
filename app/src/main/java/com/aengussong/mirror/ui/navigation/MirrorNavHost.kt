@@ -20,6 +20,12 @@ fun MirrorNavHost(navController: NavHostController) {
         navController = navController,
         startDestination = Navigation.Splash.asDestination()
     ) {
+        val popBackStackBuilder: NavOptionsBuilder.() -> Unit  = {
+            this.popUpTo(0) {
+                this.inclusive = true
+            }
+        }
+
         mirrorComposable(route = Navigation.Splash.asDestination()) { SplashScreen() }
         mirrorComposable(route = Navigation.NoSavedAddress.asDestination()) {
             EnterAddressScreen {
@@ -37,25 +43,25 @@ fun MirrorNavHost(navController: NavHostController) {
                 ip = entry.arguments?.getString("ip"),
                 port = entry.arguments?.getString("port")
             ) {
-                if (entry.arguments == null) {
-                    navController.popBackStack(0, inclusive = true)
-                }
                 navController.navigate(
-                    it.asDestination()
+                    it.asDestination(),
+                    builder = popBackStackBuilder
                 )
             }
         }
         mirrorComposable(route = Navigation.AutomaticScan.asDestination()) {
             ConnectingScreen {
                 navController.navigate(
-                    it.asDestination()
+                    it.asDestination(),
+                    builder = popBackStackBuilder
                 )
             }
         }
         mirrorComposable(route = Navigation.ControlMirror.asDestination()) {
             ControlScreen {
                 navController.navigate(
-                    it.asDestination()
+                    it.asDestination(),
+                    builder = popBackStackBuilder
                 )
             }
         }
