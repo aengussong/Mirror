@@ -42,11 +42,9 @@ fun EnterAddressScreen(vm: EnterAddressViewModel = viewModel(), onNavigate: (Nav
         }
 
         val navigation: Navigation? by vm.navigationFlow.collectAsState(initial = null)
-        if (navigation != null) {
             LaunchedEffect(navigation) {
                 navigation?.let(onNavigate)
             }
-        }
 
         Text(
             modifier = Modifier

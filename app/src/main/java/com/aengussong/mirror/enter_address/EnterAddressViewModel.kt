@@ -46,6 +46,10 @@ class EnterAddressViewModel @Inject constructor() : BaseViewModel() {
         if (!Validator.validateIp(ip)) throw IpValidationError
         if (!Validator.validatePort(port)) throw PortValidationError
     }
+
+    override fun onCleared() {
+        errorHandlerScope.cancel()
+    }
 }
 
 sealed interface Error {
