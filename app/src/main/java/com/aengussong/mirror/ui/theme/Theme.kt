@@ -8,15 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val Red = Color(0xFFc81515)
+private val DarkGray = Color(0xFF121212)
 
 private val DarkColors = darkColors(
     primary = Color(0xFF121212),
-    secondary = Red
+    secondary = Red,
+    surface = DarkGray
 )
 
 private val LightColors = lightColors(
     primary = Color(0xFF000000),
-    secondary = Red
+    secondary = Red,
+    surface = DarkGray
 )
 
 @Composable

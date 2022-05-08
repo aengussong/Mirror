@@ -7,4 +7,9 @@
     <string name="hint_mirror_port">Mirror Port</string>
     <string name="scan">Scan</string>
     <string name="automatic_scan">Automatic scan</string>
+    <string name="connecting">Trying to connect to:</string>
+    <string name="ok">OK</string>
+
+    <string name="dialog_mirror_not_discovered_title">Mirror wasn\'t discovered in the network</string>
+    <string name="dialog_cant_connect_to_mirror">Can\'t connect to the mirror</string>
 </resources>
