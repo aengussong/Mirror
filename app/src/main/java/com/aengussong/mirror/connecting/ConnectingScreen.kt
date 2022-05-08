@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,8 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aengussong.mirror.R
+import com.aengussong.mirror.ui.MirrorButton
 import com.aengussong.mirror.ui.navigation.Navigation
 import com.airbnb.lottie.compose.*
 
@@ -28,6 +31,22 @@ fun ConnectingScreen(
     val displayedAddress by vm.connectingAddressFlow.collectAsState(initial = initialAddress)
 
     val navigation by vm.navigationFlow.collectAsState(initial = null)
+
+    val error: Error? by vm.errorFlow.collectAsState(initial = null)
+
+    val localError = error
+    if (localError != null) {
+        when (localError) {
+            is CantConnectToAddress -> ConnectingDialog(
+                text = stringResource(id = R.string.dialog_cant_connect_to_mirror),
+                onClick = { vm.onErrorAcknowledged(localError) }
+            )
+            is MirrorNotDiscovered -> ConnectingDialog(
+                text = stringResource(id = R.string.dialog_mirror_not_discovered_title),
+                onClick = { vm.onErrorAcknowledged(localError) }
+            )
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -46,10 +65,12 @@ fun ConnectingScreen(
             composition = composition,
             progress = progress,
         )
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .weight(1f)) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
             Text(
                 modifier = Modifier
                     .padding(40.dp)
@@ -77,4 +98,25 @@ fun ConnectingScreen(
             navigation?.let(onNavigate)
         }
     }
+}
+
+@Composable
+private fun ConnectingDialog(text: String, onClick: () -> Unit) {
+    AlertDialog(
+        properties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
+        ),
+        text = {
+            Text(
+                fontSize = 18.sp,
+                text = text,
+                color = Color.White
+            )
+        },
+        confirmButton = {
+            MirrorButton(label = stringResource(id = R.string.ok), onClick = onClick)
+        },
+        onDismissRequest = {}
+    )
 }

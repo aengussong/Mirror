@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aengussong.mirror.R
+import com.aengussong.mirror.ui.MirrorButton
 import com.aengussong.mirror.ui.navigation.Navigation
 import com.aengussong.mirror.ui.theme.MirrorTheme
 
@@ -88,13 +89,13 @@ fun EnterAddressScreen(vm: EnterAddressViewModel = viewModel(), onNavigate: (Nav
             onTextChanged = { text ->
                 port = text
             })
-        MirrorAddressButton(
+        MirrorButton(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 40.dp),
             label = stringResource(id = R.string.scan),
             onClick = { vm.onScan(ip, port) })
-        MirrorAddressButton(
+        MirrorButton(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = 80.dp, top = 20.dp),
@@ -125,18 +126,6 @@ private fun MirrorAddressInput(
         onValueChange = onTextChanged,
         singleLine = true
     )
-}
-
-@Composable
-private fun MirrorAddressButton(modifier: Modifier = Modifier, label: String, onClick: () -> Unit) {
-    Button(
-        modifier = modifier
-            .height(48.dp)
-            .width(178.dp), onClick = onClick,
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
-    ) {
-        Text(text = label)
-    }
 }
 
 @Preview

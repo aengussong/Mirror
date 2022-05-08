@@ -13,8 +13,8 @@ private const val DEFAULT_PORT = "8080"
 class ConnectingViewModel : BaseViewModel() {
 
     val connectingAddressFlow: SharedFlow<String> = MutableSharedFlow()
-
     val navigationFlow: SharedFlow<Navigation> = MutableSharedFlow()
+    val errorFlow: SharedFlow<Error?> = MutableSharedFlow()
 
     fun onAddressSet(ip: String?, port: String?) {
         viewModelScope.launch {
@@ -23,6 +23,22 @@ class ConnectingViewModel : BaseViewModel() {
                 startScanning()
             } else {
                 connect("$ip:$validPort")
+            }
+        }
+    }
+
+    fun onDialogDismiss() {
+        viewModelScope.launch {
+            errorFlow.emit(null)
+        }
+    }
+
+    fun onErrorAcknowledged(error: Error) {
+        viewModelScope.launch {
+            errorFlow.emit(null)
+            when (error) {
+                is CantConnectToAddress -> navigationFlow.emit(Navigation.NoSavedAddress)
+                is MirrorNotDiscovered -> navigationFlow.emit(Navigation.NoSavedAddress)
             }
         }
     }
@@ -45,5 +61,8 @@ class ConnectingViewModel : BaseViewModel() {
             navigationFlow.emit(Navigation.ControlMirror)
         }
     }
-
 }
+
+sealed interface Error
+object CantConnectToAddress : Error
+object MirrorNotDiscovered : Error
