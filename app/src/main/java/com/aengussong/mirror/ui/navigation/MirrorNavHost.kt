@@ -22,7 +22,6 @@ fun MirrorNavHost(navController: NavHostController) {
     ) {
         mirrorComposable(route = Navigation.Splash.asDestination()) { SplashScreen() }
         mirrorComposable(route = Navigation.NoSavedAddress.asDestination()) {
-            navController.popBackStack(0, inclusive = true)
             EnterAddressScreen {
                 navController.navigate(
                     it.asDestination()
@@ -54,7 +53,6 @@ fun MirrorNavHost(navController: NavHostController) {
             }
         }
         mirrorComposable(route = Navigation.ControlMirror.asDestination()) {
-            navController.popBackStack(0, inclusive = true)
             ControlScreen {
                 navController.navigate(
                     it.asDestination()
