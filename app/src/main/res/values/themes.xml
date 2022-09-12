@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Mirror" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Mirror" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+
+        <item name="android:windowBackground">?attr/colorOnSecondary</item>
+
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">?attr/colorOnSecondary</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/load_animation</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">10000</item>
     </style>
 </resources>
